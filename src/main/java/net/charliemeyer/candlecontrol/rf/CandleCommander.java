@@ -1,7 +1,5 @@
 package net.charliemeyer.candlecontrol.rf;
 
-import lombok.SneakyThrows;
-
 import java.time.Duration;
 
 public class CandleCommander implements Runnable {
@@ -14,14 +12,18 @@ public class CandleCommander implements Runnable {
     isRunning = false;
   }
 
-  @SneakyThrows
   @Override
   public void run() {
     while (!shutdown) {
       if (isRunning) {
         new CandleTurnOffCmd().turnOffCandles();
       }
-      Thread.sleep(Duration.ofSeconds(DELAY_SECONDS));
+      try {
+        Thread.sleep(Duration.ofSeconds(DELAY_SECONDS));
+      } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+        throw new RuntimeException(e);
+      }
     }
   }
 

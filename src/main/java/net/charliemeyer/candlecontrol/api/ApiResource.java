@@ -23,7 +23,6 @@ public class ApiResource {
     this.candleCommander = candleCommander;
   }
 
-
   @GET
   @Path("/start")
   public ApiReturnValue start() {

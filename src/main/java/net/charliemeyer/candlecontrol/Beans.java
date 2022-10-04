@@ -1,6 +1,8 @@
 package net.charliemeyer.candlecontrol;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pi4j.Pi4J;
+import com.pi4j.context.Context;
 import net.charliemeyer.candlecontrol.rf.CandleCommander;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
@@ -33,5 +35,10 @@ public class Beans {
   @Bean
   public ObjectMapper getObjectMapper() {
     return new Jackson2ObjectMapperBuilder().build();
+  }
+
+  @Bean(destroyMethod = "shutdown")
+  public Context getPi4JContext() {
+    return Pi4J.newAutoContext();
   }
 }
